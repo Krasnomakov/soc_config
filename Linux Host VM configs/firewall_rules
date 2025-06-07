@@ -1,0 +1,23 @@
+#Install UFW
+sudo apt install ufw
+
+# Enable UFW if not already
+sudo ufw enable
+
+# Allow SSH only from your Mac IP (use ip in cisco vpn)
+sudo ufw allow from <CISCO_VPN_IP (e.g. x.x.x.0/24)> to any port 22 proto tcp
+
+# Allow Wazuh Agent communication (usually port 1514/udp, 1515/tcp)
+sudo ufw allow from <WAZUH_AGENT_IP> to any port 1514 proto udp
+sudo ufw allow from <WAZUH_AGENT_IP> to any port 1515 proto tcp
+
+#Allow Caldera ssh tunnel and agent communication
+sudo ufw allow from 192.168.142.5 to any port 8888 proto tcp
+
+# Deny everything else incoming by default
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Check status
+sudo ufw status verbose
+

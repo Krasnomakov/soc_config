@@ -1,0 +1,60 @@
+Wazuh container name 
+single-node-wazuh.manager-1
+
+wazuh manager container 
+docker exec -it single-node-wazuh.manager-1 /bin/bash
+
+
+Check agents 
+/var/ossec/bin/agent_control -l
+
+Raw logs (archives.log)
+tail -f /var/ossec/logs/archives/archives.log
+
+
+Internal Wazuh logs (ossec.log)
+tail -f /var/ossec/logs/ossec.log
+
+----
+
+docker exec -it single-node-wazuh.manager-1 tail -f /var/ossec/logs/archives/archives.log
+
+docker exec -it single-node-wazuh.manager-1 tail -f /var/ossec/logs/ossec.log
+
+docker exec -it single-node-wazuh.manager-1 /var/ossec/bin/agent_control -l
+
+----
+Edit files directly
+
+docker volume ls
+
+sudo nano /var/lib/docker/volumes/single-node_wazuh_etc/_data/ossec.conf
+
+Check logs 
+
+sudo cat /var/lib/docker/volumes/single-node_wazuh_logs/_data/archives/archives.json
+
+
+-----
+
+In case of unknown failure that is difficult to fix dump rules and reinstall manager 
+
+to log all enable 
+<logall>
+<logall_json>
+
+It will log into archive.log and archive.json files 
+
+----
+
+local rules
+sudo ls /var/lib/docker/volumes/single-node_wazuh_etc/_data/rules/
+local_rules.xml
+
+default rules
+docker exec -it single-node-wazuh.manager-1 bash
+ls /var/ossec/ruleset/rules/
+
+----
+
+
